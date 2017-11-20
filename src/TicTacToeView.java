@@ -22,9 +22,10 @@ public class TicTacToeView extends JFrame{
 	/**
 	 * Sets up the look of the frame with a grid of JButtons of 3 x 3
 	 */
-	public  TicTacToeView()
+	public  TicTacToeView(TicTacToeModel model)
 	{
 		super("TicTacToe");
+		this.model = model;
 		setSize(500, 500);
 		mainPanel = new JPanel();
 		footerPanel = new JPanel();
@@ -47,7 +48,7 @@ public class TicTacToeView extends JFrame{
 				TicTacToeButton jb = new TicTacToeButton(j, i);
 				jb.addActionListener(controller);
 				buttonList.add(jb);
-				add(jb);
+				mainPanel.add(jb);
 			}	
 		}
 		setVisible(true);
@@ -80,12 +81,18 @@ public class TicTacToeView extends JFrame{
 		this.buttonList = buttonList;
 	}
 
+	public void disable()
+	{
+		for(TicTacToeButton b: buttonList)
+		{
+			b.setEnabled(false);
+		}
+	}
 	
 	public static void main(String args[])
 	{
-		TicTacToeView view = new TicTacToeView();
 		TicTacToeModel model = new TicTacToeModel();
-		view.setTicTacToeModel(model);
+		TicTacToeView view = new TicTacToeView(model);
 		model.setTicTacToeView(view);
 	}
 	

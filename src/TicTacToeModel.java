@@ -69,17 +69,19 @@ public class TicTacToeModel
 		if(turnPlayer1)
 		{
 			board[col][row] = 'X';
-			updateBoard(col, row, 'X');
+			updateBoard(col, row, "X");
 		}
 		else
 		{
 			board[col][row] = 'O';
-			updateBoard(col, row, 'O');
+			updateBoard(col, row, "O");
 		}
+		updateStatus();
+		turnPlayer1 = !turnPlayer1;
 		
 	}
 	
-	private void updateBoard(int col, int row, char c) {
+	private void updateBoard(int col, int row, String c) {
 		for(TicTacToeButton b: view.getButtonList())
 		{
 			if(b.getRow() == row && b.getCol() == col)
@@ -110,6 +112,7 @@ public class TicTacToeModel
 		//Check rows for a win
 		for(int i = 0; i<3; i++)
 		{
+
 			if(board[0][i] == board[1][i] && board[1][i] == board[2][i])
 			{
 				if(board[0][i] == 'X')
@@ -119,10 +122,6 @@ public class TicTacToeModel
 				else if(board[0][i] == 'Y')
 				{
 					return Status.PLAYER2WIN;
-				}
-				else
-				{
-					return Status.INGAME;
 				}
 			}
 		}
@@ -135,8 +134,9 @@ public class TicTacToeModel
 				if(board[i][0] == 'X')
 				{
 					return Status.PLAYER1WIN;
+					
 				}
-				else if(board[i][0] == 'Y')
+				else if(board[i][0] == 'O')
 				{
 					return Status.PLAYER2WIN;
 				}
@@ -149,7 +149,7 @@ public class TicTacToeModel
 			{
 				return Status.PLAYER1WIN;
 			}
-			else if(board[0][0] == 'Y')
+			else if(board[0][0] == 'O')
 			{
 				return Status.PLAYER2WIN;
 			}
@@ -161,7 +161,7 @@ public class TicTacToeModel
 			{
 				return Status.PLAYER1WIN;
 			}
-			else if(board[0][2] == 'Y')
+			else if(board[0][2] == 'O')
 			{
 				return Status.PLAYER2WIN;
 			}
@@ -195,12 +195,18 @@ public class TicTacToeModel
 		{
 			case INGAME:
 				view.setStatus("in game");
+				break;
 			case PLAYER1WIN:
 				view.setStatus("player 1 wins!");
+				view.disable();
+				break;
 			case PLAYER2WIN:
 				view.setStatus("player 2 wins!");
+				view.disable();
+				break;
 			case TIE:
 				view.setStatus("tie!");
+				view.disable();
 		}
 	}
 	

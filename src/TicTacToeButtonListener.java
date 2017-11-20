@@ -17,6 +17,7 @@ public class TicTacToeButtonListener implements ActionListener{
 		int row = b.getRow();
 		int col = b.getCol();
 		model.play(col, row);
+		b.setEnabled(false);
 		
 	}
 
