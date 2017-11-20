@@ -8,6 +8,7 @@ public class TicTacToeModel
 	static final int SIZE = 3;
 	char board[][];
 	boolean turnPlayer1;
+	TicTacToeView view;
 	
 	/**
 	 *  Creates an empty board, and sets the turn to Player 1
@@ -26,7 +27,44 @@ public class TicTacToeModel
 			
 	}
 	
-	public void play(int row, int col)
+	/**
+	 * Provides the current game board
+	 * @return char[][]
+	 */
+	public char[][] getBoard() {
+		return board;
+	}
+	
+	/**
+	 * Sets the board
+	 * @param board: char[][]
+	 */
+	public void setBoard(char[][] board) {
+		this.board = board;
+	}
+	
+	/**
+	 * If true, it is Player 1 (X) turn. Otherwise, it is Player 2 (O) turn
+	 * @return boolean
+	 */
+	public boolean isTurnPlayer1() {
+		return turnPlayer1;
+	}
+
+	/**
+	 * Sets the turn to Player 1(X) if true. Otherwise, sets the turn to Player 2 (O)
+	 * @param turnPlayer1
+	 */
+	public void setTurnPlayer1(boolean turnPlayer1) {
+		this.turnPlayer1 = turnPlayer1;
+	}
+	
+	/**
+	 * Enters a character on the board
+	 * @param row: int
+	 * @param col: int
+	 */
+	public void play(int col, int row)
 	{
 		if(turnPlayer1)
 		{
@@ -38,7 +76,22 @@ public class TicTacToeModel
 		}
 	}
 	
-	public Status checkStatus()
+	/**
+	 * Sets the view for this model
+	 * @param v
+	 */
+	public void setTicTacToeView(TicTacToeView v)
+	{
+		view = v;
+	}
+	
+	/**
+	 * Gives the status of the game. This method checks for column wins, row wins and diagonal wins first. If
+	 * those are positive, the winner is provided. Otherwise, the game is in play or is a tie. This is 
+	 * determined by whether or not the board is full
+	 * @return
+	 */
+	private Status checkStatus()
 	{
 		//Check rows for a win
 		for(int i = 0; i<3; i++)
@@ -115,6 +168,26 @@ public class TicTacToeModel
 		//No wins, board is full. Result is a tie
 		return Status.TIE;
 		
+	}
+	
+	/**
+	 * Updates the status in the view
+	 * 
+	 */
+	public void updateStatus()
+	{
+		Status s = checkStatus();
+		switch (s)
+		{
+			case INGAME:
+				view.setStatus("in game");
+			case PLAYER1WIN:
+				view.setStatus("player 1 wins!");
+			case PLAYER2WIN:
+				view.setStatus("player 2 wins!");
+			case TIE:
+				view.setStatus("tie!");
+		}
 	}
 	
 }
