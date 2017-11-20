@@ -13,10 +13,11 @@ import javax.swing.JPanel;
  */
 public class TicTacToeView extends JFrame{
 	
-	JPanel mainPanel, footerPanel;
-	JLabel status;
-	TicTacToeModel model;
-	ArrayList<TicTacToeButton> buttonList;
+	private JPanel mainPanel, footerPanel;
+	private JLabel status;
+	private TicTacToeModel model;
+	private TicTacToeButtonListener controller;
+	private ArrayList<TicTacToeButton> buttonList;
 	
 	/**
 	 * Sets up the look of the frame with a grid of JButtons of 3 x 3
@@ -34,7 +35,8 @@ public class TicTacToeView extends JFrame{
 		
 		add(mainPanel, BorderLayout.CENTER);
 		add(footerPanel, BorderLayout.SOUTH); 
-			
+		
+		controller = new TicTacToeButtonListener(this, model);
 		buttonList = new ArrayList<TicTacToeButton>();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -43,6 +45,7 @@ public class TicTacToeView extends JFrame{
 			for(int j = 0; j < 3; j++)
 			{
 				TicTacToeButton jb = new TicTacToeButton(j, i);
+				jb.addActionListener(controller);
 				buttonList.add(jb);
 				add(jb);
 			}	
@@ -69,8 +72,15 @@ public class TicTacToeView extends JFrame{
 		status.setText("Game Status: " + s);
 	}
 	
-	/**
-	 */
+	public ArrayList<TicTacToeButton> getButtonList() {
+		return buttonList;
+	}
+
+	public void setButtonList(ArrayList<TicTacToeButton> buttonList) {
+		this.buttonList = buttonList;
+	}
+
+	
 	public static void main(String args[])
 	{
 		TicTacToeView view = new TicTacToeView();

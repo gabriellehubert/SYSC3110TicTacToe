@@ -32,5 +32,10 @@ public class TicTacToeButton extends JButton{
 	public void setRow(int row) {
 		this.row = row;
 	}
+	
+	public void setText(char s)
+	{
+		setText(s);
+	}
 
 }

@@ -5,10 +5,10 @@
  */
 public class TicTacToeModel 
 {
-	static final int SIZE = 3;
-	char board[][];
-	boolean turnPlayer1;
-	TicTacToeView view;
+	private static final int SIZE = 3;
+	private char board[][];
+	private boolean turnPlayer1;
+	private TicTacToeView view;
 	
 	/**
 	 *  Creates an empty board, and sets the turn to Player 1
@@ -69,13 +69,27 @@ public class TicTacToeModel
 		if(turnPlayer1)
 		{
 			board[col][row] = 'X';
+			updateBoard(col, row, 'X');
 		}
 		else
 		{
 			board[col][row] = 'O';
+			updateBoard(col, row, 'O');
 		}
+		
 	}
 	
+	private void updateBoard(int col, int row, char c) {
+		for(TicTacToeButton b: view.getButtonList())
+		{
+			if(b.getRow() == row && b.getCol() == col)
+			{
+				b.setText(c);
+			}
+		}
+		
+	}
+
 	/**
 	 * Sets the view for this model
 	 * @param v
